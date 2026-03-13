@@ -1,0 +1,8 @@
+@import "tailwindcss";
+.active {
+  background-color: #f3f4f6;
+}
+
+.active p {
+  color: #2563eb;
+}
