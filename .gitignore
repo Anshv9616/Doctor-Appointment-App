@@ -1,0 +1,4 @@
+# Environment files
+front/.env
+backend/.env
+admin/.env
