@@ -118,51 +118,44 @@ const updateProfile = async (req, res) => {
   try {
     const { name, phone, address, dob, gender } = req.body;
     const imageFile = req.file;
-    const { id } = req.user;
+    const { id } = req.user; // Ensure your auth middleware is running!
 
     if (!name || !phone || !dob || !gender) {
-      return res.json({
-        success: false,
-        message: "Data Missing",
-      });
+      return res.json({ success: false, message: "Data Missing" });
     }
 
+    // 1. Parse Address Safely
     let parsedAddress;
     try {
-      parsedAddress =
-        typeof address === "string" ? JSON.parse(address) : address;
+      parsedAddress = typeof address === "string" ? JSON.parse(address) : address;
     } catch (e) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid address format" });
+      return res.status(400).json({ success: false, message: "Invalid address format" });
     }
 
-    await userModel.findByIdAndUpdate(id, {
+    // 2. Build Update Object
+    const updateData = {
       name,
       phone,
       address: parsedAddress,
       dob,
       gender,
-    });
+    };
 
+    // 3. Upload to Cloudinary only if a file exists
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
         resource_type: "image",
       });
-      const imageURL = imageUpload.secure_url;
-      await userModel.findByIdAndUpdate(id, { image: imageURL });
+      updateData.image = imageUpload.secure_url;
     }
 
-    res.json({
-      success: true,
-      message: "Profile Updated",
-    });
+    // 4. Single Database Call
+    await userModel.findByIdAndUpdate(id, updateData);
+
+    res.json({ success: true, message: "Profile Updated" });
   } catch (err) {
-    console.log(err);
-    res.json({
-      success: false,
-      message: err.message,
-    });
+    console.error(err);
+    res.json({ success: false, message: err.message });
   }
 };
 
