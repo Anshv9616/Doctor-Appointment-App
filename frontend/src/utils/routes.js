@@ -1,6 +1,6 @@
 
 
-const BASE_URL="http://localhost:4000"
+const BASE_URL="https://doctor-appointment-app-umve.onrender.com"
 
 
 export const API_ROUTES = {
