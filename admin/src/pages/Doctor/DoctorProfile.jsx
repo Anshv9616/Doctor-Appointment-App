@@ -18,15 +18,14 @@ const DoctorProfile = () => {
   useEffect(() => {
     if (profileData) {
       setEditData({ ...profileData })
-    
     }
   }, [profileData])
 
   if (!profileData) {
     return (
-      <div style={styles.loadingWrapper}>
-        <div style={styles.pulse}></div>
-        <p style={styles.loadingText}>Loading profile...</p>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-300 animate-pulse"></div>
+        <p className="text-slate-500 dark:text-slate-400">Loading profile...</p>
       </div>
     )
   }
@@ -70,150 +69,137 @@ const DoctorProfile = () => {
   const data = isEditing ? editData : profileData
 
   return (
-    <div style={styles.page}>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 md:p-10 font-sans relative overflow-hidden">
       {/* Background decoration */}
-      <div style={styles.bgOrb1} />
-      <div style={styles.bgOrb2} />
+      <div className="fixed -top-[120px] -right-[120px] w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,_rgba(99,102,241,0.15),_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(99,102,241,0.05),_transparent_70%)] pointer-events-none" />
+      <div className="fixed -bottom-[100px] -left-[100px] w-[350px] h-[350px] rounded-full bg-[radial-gradient(circle,_rgba(224,231,255,0.4),_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(99,102,241,0.05),_transparent_70%)] pointer-events-none" />
 
-      <div style={styles.container}>
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header Card */}
-        <div style={styles.headerCard}>
-          <div style={styles.avatarSection}>
-            <div style={styles.avatarRing}>
+        <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start gap-8 shadow-sm border border-slate-200 dark:border-slate-700 mb-8">
+          <div className="flex flex-col items-center gap-3 shrink-0">
+            <div className="w-[120px] h-[120px] rounded-full bg-gradient-to-br from-indigo-500 to-indigo-300 p-1 shadow-md">
               <img
                 src={profileData.image}
                 alt={profileData.name}
-                style={styles.avatar}
+                className="w-full h-full rounded-full object-cover border-[3px] border-white dark:border-slate-800"
                 onError={e => { e.target.src = 'https://via.placeholder.com/140' }}
               />
             </div>
-            <div style={styles.availableBadge}>
-              <span style={{
-                ...styles.availableDot,
-                background: profileData.available ? '#22c55e' : '#ef4444'
-              }} />
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-full px-3 py-1 mt-1">
+              <span className={`w-2 h-2 rounded-full inline-block ${profileData.available ? 'bg-green-500' : 'bg-red-500'}`} />
               {profileData.available ? 'Available' : 'Unavailable'}
             </div>
           </div>
 
-          <div style={styles.headerInfo}>
-            <div style={styles.nameRow}>
-              <h1 style={styles.doctorName}>Dr. {profileData.name}</h1>
-              <span style={styles.specialityTag}>{profileData.speciality}</span>
+          <div className="flex-1">
+            <div className="flex items-center gap-4 flex-wrap mb-3">
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 m-0 tracking-tight">Dr. {profileData.name}</h1>
+              <span className="bg-gradient-to-br from-indigo-500 to-indigo-400 text-white text-xs font-semibold rounded-full px-4 py-1">
+                {profileData.speciality}
+              </span>
             </div>
-            <div style={styles.metaRow}>
+            <div className="flex flex-wrap gap-2 mb-3">
               <MetaChip icon="🎓" label={profileData.degree} />
               <MetaChip icon="⏱" label={`${profileData.experience} yrs exp`} />
               <MetaChip icon="💳" label={`₹${profileData.fees} / visit`} />
             </div>
-            <p style={styles.email}>✉ {profileData.email}</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 m-0">✉ {profileData.email}</p>
           </div>
 
-          <div style={styles.editBtnWrapper}>
+          <div className="ml-auto mt-4 md:mt-0">
             {!isEditing ? (
-              <button style={styles.editBtn} onClick={() => setIsEditing(true)}>
+              <button className="bg-gradient-to-br from-indigo-500 to-indigo-400 text-white border-none rounded-xl px-6 py-2.5 text-sm font-semibold cursor-pointer shadow-md hover:opacity-90 transition-opacity" onClick={() => setIsEditing(true)}>
                 Edit Profile
               </button>
             ) : (
-              <div style={styles.actionBtns}>
-                <button style={{...styles.saveBtn, opacity: saving ? 0.7 : 1}} onClick={handleSave} disabled={saving}>
+              <div className="flex gap-3">
+                <button className={`bg-indigo-500 text-white border-none rounded-xl px-5 py-2.5 font-semibold text-sm cursor-pointer hover:bg-indigo-600 ${saving ? 'opacity-70' : ''}`} onClick={handleSave} disabled={saving}>
                   {saving ? 'Saving...' : 'Save'}
                 </button>
-                <button style={styles.cancelBtn} onClick={() => { setIsEditing(false); setEditData({ ...profileData }) }}>Cancel</button>
+                <button className="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-[1.5px] border-slate-200 dark:border-slate-600 rounded-xl px-5 py-2.5 font-semibold text-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700" onClick={() => { setIsEditing(false); setEditData({ ...profileData }) }}>
+                  Cancel
+                </button>
               </div>
             )}
           </div>
         </div>
 
         {/* Body Grid */}
-        <div style={styles.grid}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* About */}
-          <div style={{ ...styles.card, gridColumn: 'span 2' }}>
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 md:col-span-2">
             <SectionLabel>About</SectionLabel>
             {isEditing ? (
               <textarea
-                style={styles.textarea}
+                className="w-full box-border border-[1.5px] border-indigo-100 dark:border-slate-600 rounded-xl p-3 text-sm text-slate-700 dark:text-slate-300 font-sans resize-y outline-none bg-indigo-50/30 dark:bg-slate-900 focus:border-indigo-400"
                 value={data.about}
                 onChange={e => handleChange('about', e.target.value)}
                 rows={4}
               />
             ) : (
-              <p style={styles.aboutText}>{profileData.about || 'No bio provided.'}</p>
+              <p className="text-[15px] text-slate-700 dark:text-slate-300 leading-relaxed m-0">{profileData.about || 'No bio provided.'}</p>
             )}
           </div>
 
           {/* Address */}
-          <div style={styles.card}>
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700">
             <SectionLabel>Address</SectionLabel>
             {isEditing ? (
               <>
                 <input
-                  style={styles.input}
+                  className="w-full box-border border-[1.5px] border-indigo-100 dark:border-slate-600 rounded-xl p-3 text-sm text-slate-700 dark:text-slate-300 font-sans outline-none bg-indigo-50/30 dark:bg-slate-900 mb-3 focus:border-indigo-400"
                   placeholder="Line 1"
                   value={data.address?.line1 || ''}
                   onChange={e => handleChange('address', { ...data.address, line1: e.target.value })}
                 />
                 <input
-                  style={{ ...styles.input, marginTop: 10 }}
+                  className="w-full box-border border-[1.5px] border-indigo-100 dark:border-slate-600 rounded-xl p-3 text-sm text-slate-700 dark:text-slate-300 font-sans outline-none bg-indigo-50/30 dark:bg-slate-900 focus:border-indigo-400"
                   placeholder="Line 2"
                   value={data.address?.line2 || ''}
                   onChange={e => handleChange('address', { ...data.address, line2: e.target.value })}
                 />
               </>
             ) : (
-              <div style={styles.addressBlock}>
-                <p style={styles.addressLine}>📍 {profileData.address?.line1}</p>
-                <p style={styles.addressLine}>{profileData.address?.line2}</p>
+              <div className="flex flex-col gap-1">
+                <p className="text-[15px] text-slate-700 dark:text-slate-300 m-0">📍 {profileData.address?.line1}</p>
+                <p className="text-[15px] text-slate-700 dark:text-slate-300 m-0 ml-[22px]">{profileData.address?.line2}</p>
               </div>
             )}
           </div>
 
           {/* Availability */}
-          <div style={styles.card}>
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700">
             <SectionLabel>Availability</SectionLabel>
             {isEditing ? (
-              <label style={styles.toggleRow}>
-                <span style={styles.toggleLabel}>Accept Appointments</span>
+              <label className="flex items-center justify-between cursor-pointer">
+                <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">Accept Appointments</span>
                 <div
-                  style={{
-                    ...styles.toggle,
-                    background: data.available ? '#6366f1' : '#d1d5db'
-                  }}
+                  className={`w-11 h-6 rounded-full relative cursor-pointer transition-colors duration-300 ${data.available ? 'bg-indigo-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                   onClick={() => handleChange('available', !data.available)}
                 >
-                  <div style={{
-                    ...styles.toggleThumb,
-                    transform: data.available ? 'translateX(22px)' : 'translateX(2px)'
-                  }} />
+                  <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-300 ${data.available ? 'translate-x-5' : 'translate-x-0'}`} />
                 </div>
               </label>
             ) : (
-              <div style={styles.availabilityDisplay}>
-                <div style={{
-                  ...styles.availabilityIndicator,
-                  background: profileData.available ? '#dcfce7' : '#fee2e2',
-                  color: profileData.available ? '#16a34a' : '#dc2626'
-                }}>
-                  <span style={{
-                    width: 10, height: 10, borderRadius: '50%',
-                    background: profileData.available ? '#16a34a' : '#dc2626',
-                    display: 'inline-block', marginRight: 8
-                  }} />
+              <div className="mb-2">
+                <div className={`inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold ${profileData.available ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'}`}>
+                  <span className={`w-2.5 h-2.5 rounded-full inline-block mr-2 ${profileData.available ? 'bg-green-600 dark:bg-green-400' : 'bg-red-600 dark:bg-red-400'}`} />
                   {profileData.available ? 'Accepting Appointments' : 'Not Accepting Appointments'}
                 </div>
               </div>
             )}
 
             {/* Slots Preview */}
-            <div style={{ marginTop: 20 }}>
-              <p style={styles.slotTitle}>Booked Slots</p>
+            <div className="mt-5">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Booked Slots</p>
               {Object.keys(profileData.slots_booked || {}).length === 0 ? (
-                <p style={styles.noSlots}>No bookings yet</p>
+                <p className="text-sm text-slate-400 m-0">No bookings yet</p>
               ) : (
                 Object.entries(profileData.slots_booked).map(([date, slots]) => (
-                  <div key={date} style={styles.slotRow}>
-                    <span style={styles.slotDate}>{date.replace(/_/g, '/')}</span>
-                    <span style={styles.slotCount}>{slots.length} booking{slots.length > 1 ? 's' : ''}</span>
+                  <div key={date} className="flex justify-between items-center py-2 px-3 bg-indigo-50/50 dark:bg-slate-700/50 rounded-xl mb-1.5 border border-indigo-100/50 dark:border-slate-600">
+                    <span className="text-[13px] text-slate-700 dark:text-slate-300 font-semibold">{date.replace(/_/g, '/')}</span>
+                    <span className="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300 rounded-full px-2.5 py-0.5 font-semibold">{slots.length} booking{slots.length > 1 ? 's' : ''}</span>
                   </div>
                 ))
               )}
@@ -222,12 +208,12 @@ const DoctorProfile = () => {
 
           {/* Fees */}
           {isEditing && (
-            <div style={styles.card}>
+            <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 md:col-span-2">
               <SectionLabel>Consultation Fee</SectionLabel>
-              <div style={styles.feeInputWrapper}>
-                <span style={styles.feeSymbol}>₹</span>
+              <div className="flex items-center border-[1.5px] border-indigo-100 dark:border-slate-600 rounded-xl overflow-hidden bg-indigo-50/30 dark:bg-slate-900 focus-within:border-indigo-400 transition-colors max-w-[200px]">
+                <span className="px-4 py-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-bold text-base border-r border-indigo-100 dark:border-slate-600">₹</span>
                 <input
-                  style={styles.feeInput}
+                  className="flex-1 border-none bg-transparent px-4 py-3 text-[15px] text-slate-700 dark:text-slate-300 font-sans outline-none"
                   type="number"
                   value={data.fees}
                   onChange={e => handleChange('fees', Number(e.target.value))}
@@ -240,10 +226,7 @@ const DoctorProfile = () => {
 
       {/* Toast */}
       {toast && (
-        <div style={{
-          ...styles.toast,
-          background: toast.type === 'success' ? '#22c55e' : '#ef4444',
-        }}>
+        <div className={`fixed bottom-8 right-8 text-white font-semibold text-sm rounded-xl px-6 py-3 shadow-lg z-50 animate-[slideUp_0.3s_ease] ${toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
           {toast.type === 'success' ? '✓' : '✕'} {toast.msg}
         </div>
       )}
@@ -252,220 +235,14 @@ const DoctorProfile = () => {
 }
 
 const MetaChip = ({ icon, label }) => (
-  <div style={styles.chip}>
+  <div className="flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/30 rounded-full px-3.5 py-1 text-[13px] text-indigo-600 dark:text-indigo-300 font-medium">
     <span>{icon}</span>
     <span>{label}</span>
   </div>
 )
 
 const SectionLabel = ({ children }) => (
-  <p style={styles.sectionLabel}>{children}</p>
+  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-[1.2px] m-0 mb-3">{children}</p>
 )
-
-const styles = {
-  page: {
-    minHeight: '100vh',
-    background: '#f8f7ff',
-    padding: '40px 24px',
-    fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  bgOrb1: {
-    position: 'fixed', top: -120, right: -120,
-    width: 400, height: 400, borderRadius: '50%',
-    background: 'radial-gradient(circle, #c7d2fe55, transparent 70%)',
-    pointerEvents: 'none',
-  },
-  bgOrb2: {
-    position: 'fixed', bottom: -100, left: -100,
-    width: 350, height: 350, borderRadius: '50%',
-    background: 'radial-gradient(circle, #e0e7ff55, transparent 70%)',
-    pointerEvents: 'none',
-  },
-  container: {
-    maxWidth: 900,
-    margin: '0 auto',
-    position: 'relative',
-    zIndex: 1,
-  },
-  headerCard: {
-    background: 'white',
-    borderRadius: 24,
-    padding: '32px 36px',
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: 28,
-    boxShadow: '0 4px 24px #6366f115',
-    marginBottom: 24,
-    flexWrap: 'wrap',
-  },
-  avatarSection: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-  },
-  avatarRing: {
-    width: 120, height: 120, borderRadius: '50%',
-    background: 'linear-gradient(135deg, #6366f1, #a5b4fc)',
-    padding: 3, boxShadow: '0 8px 24px #6366f130',
-  },
-  avatar: {
-    width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover',
-    border: '3px solid white',
-  },
-  availableBadge: {
-    display: 'flex', alignItems: 'center', gap: 6,
-    fontSize: 12, fontWeight: 600, color: '#374151',
-    background: '#f3f4f6', borderRadius: 20, padding: '4px 12px',
-  },
-  availableDot: {
-    width: 8, height: 8, borderRadius: '50%', display: 'inline-block',
-  },
-  headerInfo: {
-    flex: 1,
-  },
-  nameRow: {
-    display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 12,
-  },
-  doctorName: {
-    fontSize: 28, fontWeight: 700, color: '#111827', margin: 0,
-    letterSpacing: '-0.5px',
-  },
-  specialityTag: {
-    background: 'linear-gradient(135deg, #6366f1, #818cf8)',
-    color: 'white', fontSize: 12, fontWeight: 600,
-    borderRadius: 20, padding: '4px 14px',
-  },
-  metaRow: {
-    display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12,
-  },
-  chip: {
-    display: 'flex', alignItems: 'center', gap: 6,
-    background: '#f0f0ff', border: '1px solid #e0e7ff',
-    borderRadius: 20, padding: '5px 14px',
-    fontSize: 13, color: '#4f46e5', fontWeight: 500,
-  },
-  email: {
-    fontSize: 13, color: '#6b7280', margin: 0,
-  },
-  editBtnWrapper: {
-    marginLeft: 'auto',
-  },
-  editBtn: {
-    background: 'linear-gradient(135deg, #6366f1, #818cf8)',
-    color: 'white', border: 'none', borderRadius: 12,
-    padding: '10px 22px', fontSize: 14, fontWeight: 600,
-    cursor: 'pointer', boxShadow: '0 4px 12px #6366f130',
-    transition: 'opacity 0.2s',
-  },
-  actionBtns: { display: 'flex', gap: 10 },
-  saveBtn: {
-    background: '#6366f1', color: 'white', border: 'none',
-    borderRadius: 12, padding: '10px 20px', fontWeight: 600,
-    fontSize: 14, cursor: 'pointer',
-  },
-  cancelBtn: {
-    background: 'white', color: '#6b7280',
-    border: '1.5px solid #e5e7eb', borderRadius: 12,
-    padding: '10px 20px', fontWeight: 600, fontSize: 14, cursor: 'pointer',
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: 20,
-  },
-  card: {
-    background: 'white', borderRadius: 20,
-    padding: '24px 28px',
-    boxShadow: '0 2px 16px #6366f10d',
-  },
-  sectionLabel: {
-    fontSize: 11, fontWeight: 700, color: '#9ca3af',
-    textTransform: 'uppercase', letterSpacing: '1.2px', margin: '0 0 14px',
-  },
-  aboutText: {
-    fontSize: 15, color: '#374151', lineHeight: 1.7, margin: 0,
-  },
-  textarea: {
-    width: '100%', boxSizing: 'border-box',
-    border: '1.5px solid #e0e7ff', borderRadius: 12,
-    padding: '12px 14px', fontSize: 14, color: '#374151',
-    fontFamily: 'inherit', resize: 'vertical', outline: 'none',
-    background: '#f8f7ff',
-  },
-  input: {
-    width: '100%', boxSizing: 'border-box',
-    border: '1.5px solid #e0e7ff', borderRadius: 12,
-    padding: '11px 14px', fontSize: 14, color: '#374151',
-    fontFamily: 'inherit', outline: 'none', background: '#f8f7ff',
-  },
-  addressBlock: { display: 'flex', flexDirection: 'column', gap: 4 },
-  addressLine: { fontSize: 15, color: '#374151', margin: 0 },
-  availabilityDisplay: { marginBottom: 8 },
-  availabilityIndicator: {
-    display: 'inline-flex', alignItems: 'center',
-    borderRadius: 12, padding: '8px 16px', fontSize: 14, fontWeight: 600,
-  },
-  toggleRow: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    cursor: 'pointer',
-  },
-  toggleLabel: { fontSize: 14, color: '#374151', fontWeight: 500 },
-  toggle: {
-    width: 46, height: 26, borderRadius: 13,
-    position: 'relative', cursor: 'pointer', transition: 'background 0.3s',
-  },
-  toggleThumb: {
-    position: 'absolute', top: 2,
-    width: 22, height: 22, borderRadius: '50%',
-    background: 'white', boxShadow: '0 1px 4px #0002',
-    transition: 'transform 0.3s',
-  },
-  slotTitle: {
-    fontSize: 12, fontWeight: 700, color: '#9ca3af',
-    textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 10,
-  },
-  noSlots: { fontSize: 13, color: '#9ca3af' },
-  slotRow: {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    padding: '8px 12px', background: '#f8f7ff', borderRadius: 10, marginBottom: 6,
-  },
-  slotDate: { fontSize: 13, color: '#374151', fontWeight: 600 },
-  slotCount: {
-    fontSize: 12, background: '#e0e7ff', color: '#4f46e5',
-    borderRadius: 20, padding: '2px 10px', fontWeight: 600,
-  },
-  feeInputWrapper: {
-    display: 'flex', alignItems: 'center',
-    border: '1.5px solid #e0e7ff', borderRadius: 12,
-    overflow: 'hidden', background: '#f8f7ff',
-  },
-  feeSymbol: {
-    padding: '11px 14px', background: '#ede9fe',
-    color: '#6366f1', fontWeight: 700, fontSize: 16,
-  },
-  feeInput: {
-    flex: 1, border: 'none', background: 'transparent',
-    padding: '11px 14px', fontSize: 15, color: '#374151',
-    fontFamily: 'inherit', outline: 'none',
-  },
-  loadingWrapper: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center',
-    justifyContent: 'center', minHeight: '60vh', gap: 16,
-  },
-  pulse: {
-    width: 48, height: 48, borderRadius: '50%',
-    background: 'linear-gradient(135deg, #6366f1, #a5b4fc)',
-    animation: 'pulse 1.5s ease-in-out infinite',
-  },
-  loadingText: { color: '#9ca3af', fontFamily: 'inherit' },
-  toast: {
-    position: 'fixed', bottom: 32, right: 32,
-    color: 'white', fontWeight: 600, fontSize: 14,
-    borderRadius: 14, padding: '14px 24px',
-    boxShadow: '0 8px 24px #0002',
-    zIndex: 1000,
-    animation: 'slideUp 0.3s ease',
-  },
-}
 
 export default DoctorProfile

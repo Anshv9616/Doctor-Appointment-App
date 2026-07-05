@@ -118,13 +118,13 @@ const updateProfile = async (req, res) => {
   try {
     const { name, phone, address, dob, gender } = req.body;
     const imageFile = req.file;
-    const { id } = req.user; // Ensure your auth middleware is running!
+    const { id } = req.user;
 
     if (!name || !phone || !dob || !gender) {
       return res.json({ success: false, message: "Data Missing" });
     }
 
-    // 1. Parse Address Safely
+   
     let parsedAddress;
     try {
       parsedAddress = typeof address === "string" ? JSON.parse(address) : address;
@@ -132,7 +132,7 @@ const updateProfile = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid address format" });
     }
 
-    // 2. Build Update Object
+    
     const updateData = {
       name,
       phone,
@@ -141,7 +141,7 @@ const updateProfile = async (req, res) => {
       gender,
     };
 
-    // 3. Upload to Cloudinary only if a file exists
+   
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
         resource_type: "image",
@@ -149,7 +149,7 @@ const updateProfile = async (req, res) => {
       updateData.image = imageUpload.secure_url;
     }
 
-    // 4. Single Database Call
+    
     await userModel.findByIdAndUpdate(id, updateData);
 
     res.json({ success: true, message: "Profile Updated" });

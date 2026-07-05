@@ -19,11 +19,13 @@ const App = () => {
   const {admin_token}=useContext(AdminContext)
   const {doctor_token}=useContext(DoctorContext)
   return admin_token || doctor_token ? (
-        <div className='bg-[#F8F9FD]'>
+        <div className='bg-slate-50 dark:bg-slate-950 min-h-screen'>
         <ToastContainer/>
         <Navbar/>
         <div className='flex items-start'>
            <Sidebar />
+           
+           <div className='flex-1 w-full p-4 sm:p-6 lg:p-8 max-h-[calc(100vh-64px)] overflow-y-auto'>
 
            <Routes>
             <Route path="/" element={<></>}/>
@@ -39,6 +41,7 @@ const App = () => {
            
         
            </Routes>
+           </div>
 
         </div>
         </div>

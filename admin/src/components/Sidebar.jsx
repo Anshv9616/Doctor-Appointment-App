@@ -28,19 +28,19 @@ const Sidebar = () => {
   if (!admin_token && !doctor_token) return null;
 
   return (
-    <div className="w-64 h-screen bg-white shadow-md p-6 flex flex-col gap-6">
+    <div className="w-64 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shadow-md p-6 flex flex-col gap-6">
       {menuItems.map((item) => (
         <NavLink
           key={item.path}
           to={item.path}
           className={({ isActive }) =>
-            `flex items-center gap-4 cursor-pointer p-3 rounded-md transition hover:bg-gray-100 ${
-              isActive ? 'active' : ''
+            `flex items-center gap-4 cursor-pointer p-3 rounded-xl transition-all duration-300 group hover:bg-slate-50 dark:hover:bg-slate-800/80 ${
+              isActive ? 'active border-r-4 border-primary dark:border-primary-light bg-slate-50 dark:bg-slate-800 shadow-sm' : ''
             }`
           }
         >
-          <img src={item.icon} alt={item.label} className="w-6 h-6" />
-          <p className="font-medium text-gray-800">{item.label}</p>
+          <img src={item.icon} alt={item.label} className="w-6 h-6 dark:invert opacity-70 group-hover:opacity-100 transition-opacity" />
+          <p className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{item.label}</p>
         </NavLink>
       ))}
     </div>

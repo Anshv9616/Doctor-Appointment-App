@@ -11,60 +11,70 @@ const DoctorDashboard = () => {
   }, [doctor_token]);
 
   if (!dashData) {
-    return <div style={loaderStyle}>Loading your insights...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-slate-500 dark:text-slate-400 text-lg">
+        Loading your insights...
+      </div>
+    );
   }
 
   return (
-    <div style={containerStyle}>
-      <header style={headerStyle}>
-        <h2 style={{ margin: 0, fontSize: '24px', color: '#1a202c' }}>Dashboard Overview</h2>
-        <p style={{ color: '#718096', marginTop: '4px' }}>Welcome back, here is what's happening today.</p>
+    <div className="p-6 md:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen font-sans">
+      <header className="mb-8">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 m-0">
+          Dashboard Overview
+        </h2>
+        <p className="text-slate-500 dark:text-slate-400 mt-1">
+          Welcome back, here is what's happening today.
+        </p>
       </header>
 
       {/* Summary Cards */}
-      <div style={statsGridStyle}>
-        <StatCard title="Total Earnings" value={`₹${dashData.totalEarnings}`} icon="💰" color="#4C51BF" />
-        <StatCard title="Appointments" value={dashData.totalAppointments} icon="📅" color="#38A169" />
-        <StatCard title="Total Patients" value={dashData.totalPatients} icon="👥" color="#DD6B20" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <StatCard title="Total Earnings" value={`₹${dashData.totalEarnings}`} icon="💰" colorClass="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30" />
+        <StatCard title="Appointments" value={dashData.totalAppointments} icon="📅" colorClass="text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30" />
+        <StatCard title="Total Patients" value={dashData.totalPatients} icon="👥" colorClass="text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/30" />
       </div>
 
       {/* Latest Appointments Section */}
-      <div style={tableContainerStyle}>
-        <h3 style={{ padding: '20px', margin: 0, borderBottom: '1px solid #edf2f7' }}>Latest Appointments</h3>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={tableStyle}>
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <h3 className="px-6 py-5 m-0 text-lg font-semibold text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700">
+          Latest Appointments
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
             <thead>
-              <tr style={{ backgroundColor: '#f7fafc' }}>
-                <th style={thStyle}>Patient</th>
-                <th style={thStyle}>Date & Time</th>
-                <th style={thStyle}>Amount</th>
-                <th style={thStyle}>Status</th>
+              <tr className="bg-slate-50 dark:bg-slate-900/50">
+                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Patient</th>
+                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date & Time</th>
+                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Amount</th>
+                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
               {dashData.latestAppointments.map((appt, idx) => (
-                <tr key={idx} style={trStyle}>
-                  <td style={tdStyle}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-3">
                       <img 
                         src={appt.userData?.image} 
                         alt="" 
-                        style={avatarStyle} 
+                        className="w-10 h-10 rounded-full object-cover border-2 border-slate-100 dark:border-slate-700" 
                       />
                       <div>
-                        <div style={{ fontWeight: '600', color: '#2d3748' }}>{appt.userData?.name}</div>
-                        <div style={{ fontSize: '12px', color: '#a0aec0' }}>{appt.userData?.email}</div>
+                        <div className="font-semibold text-slate-800 dark:text-slate-200">{appt.userData?.name}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">{appt.userData?.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td style={tdStyle}>
-                    <div style={{ color: '#4a5568' }}>{appt.slotDate}</div>
-                    <div style={{ fontSize: '12px', color: '#718096' }}>{appt.slotTime}</div>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-slate-700 dark:text-slate-300">{appt.slotDate}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">{appt.slotTime}</div>
                   </td>
-                  <td style={tdStyle}>
-                    <span style={{ fontWeight: '600' }}>₹{appt.amount}</span>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="font-semibold text-slate-800 dark:text-slate-200">₹{appt.amount}</span>
                   </td>
-                  <td style={tdStyle}>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <StatusBadge 
                       cancelled={appt.cancelled} 
                       completed={appt.isCompleted} 
@@ -81,124 +91,26 @@ const DoctorDashboard = () => {
 };
 
 // Sub-components for cleaner code
-const StatCard = ({ title, value, icon, color }) => (
-  <div style={cardStyle}>
-    <div style={{ ...iconCircle, backgroundColor: `${color}15`, color: color }}>{icon}</div>
+const StatCard = ({ title, value, icon, colorClass }) => (
+  <div className="bg-white dark:bg-slate-800 p-6 rounded-xl flex items-center gap-5 shadow-sm border border-slate-200 dark:border-slate-700">
+    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl ${colorClass}`}>
+      {icon}
+    </div>
     <div>
-      <p style={{ margin: 0, fontSize: '14px', color: '#718096', fontWeight: '500' }}>{title}</p>
-      <h3 style={{ margin: '4px 0 0 0', fontSize: '22px', color: '#2d3748' }}>{value}</h3>
+      <p className="m-0 text-sm text-slate-500 dark:text-slate-400 font-medium">{title}</p>
+      <h3 className="m-0 mt-1 text-2xl font-bold text-slate-800 dark:text-slate-100">{value}</h3>
     </div>
   </div>
 );
 
 const StatusBadge = ({ cancelled, completed }) => {
-  let styles = {
-    padding: '4px 12px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: '600',
-    display: 'inline-block'
-  };
-
   if (cancelled) {
-    styles = { ...styles, backgroundColor: '#FFF5F5', color: '#C53030' };
-    return <span style={styles}>Cancelled</span>;
+    return <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400">Cancelled</span>;
   }
   if (completed) {
-    styles = { ...styles, backgroundColor: '#F0FFF4', color: '#2F855A' };
-    return <span style={styles}>Completed</span>;
+    return <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400">Completed</span>;
   }
-  styles = { ...styles, backgroundColor: '#EBF8FF', color: '#2B6CB0' };
-  return <span style={styles}>Pending</span>;
-};
-
-// --- Styles ---
-const containerStyle = {
-  padding: "30px",
-  backgroundColor: "#f8fafc",
-  minHeight: "100vh",
-  fontFamily: "'Inter', system-ui, sans-serif"
-};
-
-const headerStyle = {
-  marginBottom: "30px"
-};
-
-const statsGridStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-  gap: "24px",
-  marginBottom: "40px"
-};
-
-const cardStyle = {
-  background: "#fff",
-  padding: "24px",
-  borderRadius: "12px",
-  display: "flex",
-  alignItems: "center",
-  gap: "20px",
-  boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.06)"
-};
-
-const iconCircle = {
-  width: "48px",
-  height: "48px",
-  borderRadius: "10px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  fontSize: "20px"
-};
-
-const tableContainerStyle = {
-  background: "#fff",
-  borderRadius: "12px",
-  boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)",
-  border: "1px solid #edf2f7"
-};
-
-const tableStyle = {
-  width: "100%",
-  borderCollapse: "collapse",
-  textAlign: "left"
-};
-
-const thStyle = {
-  padding: "16px 20px",
-  fontSize: "13px",
-  textTransform: "uppercase",
-  letterSpacing: "0.05em",
-  color: "#718096",
-  fontWeight: "600"
-};
-
-const tdStyle = {
-  padding: "16px 20px",
-  borderTop: "1px solid #edf2f7",
-  fontSize: "14px",
-  verticalAlign: "middle"
-};
-
-const trStyle = {
-  transition: "background 0.2s"
-};
-
-const avatarStyle = {
-  width: "40px",
-  height: "40px",
-  borderRadius: "50%",
-  objectFit: "cover",
-  border: "2px solid #edf2f7"
-};
-
-const loaderStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100vh",
-  color: "#718096",
-  fontSize: "18px"
+  return <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">Pending</span>;
 };
 
 export default DoctorDashboard;

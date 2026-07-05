@@ -107,7 +107,7 @@ const getAllApointments=async(req,res)=>{
 }
 
 
-//api to mark appointment as completed
+
 
 const markAppointmentCompleted=async(req,res)=>{
         try{

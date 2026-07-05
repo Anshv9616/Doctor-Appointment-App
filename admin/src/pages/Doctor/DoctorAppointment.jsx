@@ -74,25 +74,25 @@ export default function DoctorAppointment() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">My Appointments</h1>
+      <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-slate-100">My Appointments</h1>
 
       {appointments && appointments.length > 0 ? (
-        <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-gray-200 dark:border-slate-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Patient</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Contact</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Date</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Time</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fees</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Payment</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Actions</th>
+                <tr className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 border-b border-gray-200 dark:border-slate-700">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Patient</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Contact</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Date</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Time</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Fees</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Payment</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Status</th>
+                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-slate-700">
                 {appointments.map((appointment) => {
                   // support multiple possible fields (from your sample)
                   const isCancelled = !!appointment.cancelled || updatedStatus[appointment._id] === 'cancelled';
@@ -106,59 +106,59 @@ export default function DoctorAppointment() {
                   const patient = appointment.userData || appointment.user || {};
 
                   return (
-                    <tr key={appointment._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={appointment._id} className="hover:bg-gray-50 dark:hover:bg-slate-750 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <User className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                          <span className="font-medium text-gray-800">{patient.name || 'Unknown'}</span>
+                          <User className="w-5 h-5 text-primary flex-shrink-0" />
+                          <span className="font-medium text-gray-800 dark:text-slate-200">{patient.name || 'Unknown'}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm">
-                          <div className="text-gray-700">{patient.email || 'No email'}</div>
-                          <div className="text-gray-500">{patient.phone || 'No phone'}</div>
+                          <div className="text-gray-700 dark:text-slate-300">{patient.email || 'No email'}</div>
+                          <div className="text-gray-500 dark:text-slate-400">{patient.phone || 'No phone'}</div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-gray-700">
-                          <Calendar className="w-4 h-4 text-blue-500" />
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-slate-300">
+                          <Calendar className="w-4 h-4 text-primary" />
                           <span className="text-sm">{formatDate(appointment.slotDate)}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-gray-700">
-                          <Clock className="w-4 h-4 text-blue-500" />
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-slate-300">
+                          <Clock className="w-4 h-4 text-primary" />
                           <span className="text-sm">{appointment.slotTime || '-'}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-gray-700">
-                          <DollarSign className="w-4 h-4 text-blue-500" />
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-slate-300">
+                          <DollarSign className="w-4 h-4 text-primary" />
                           <span className="text-sm font-bold">${appointment.amount ?? '0'}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         {isPaid ? (
-                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                             ✓ Paid
                           </span>
                         ) : (
-                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-600">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-slate-300">
                             Offline
                           </span>
                         )}
                       </td>
                       <td className="px-6 py-4">
                         {isCancelled ? (
-                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
                             Cancelled
                           </span>
                         ) : isCompleted ? (
-                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                             Completed
                           </span>
                         ) : (
-                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
                             Scheduled
                           </span>
                         )}
@@ -198,10 +198,10 @@ export default function DoctorAppointment() {
           </div>
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
-          <Calendar className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">No Appointments Yet</h3>
-          <p className="text-gray-500">Your appointments will appear here once patients book with you.</p>
+        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+          <Calendar className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-slate-500" />
+          <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-300 mb-2">No Appointments Yet</h3>
+          <p className="text-gray-500 dark:text-slate-400">Your appointments will appear here once patients book with you.</p>
         </div>
       )}
     </div>

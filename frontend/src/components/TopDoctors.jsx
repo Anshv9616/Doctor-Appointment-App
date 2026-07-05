@@ -1,34 +1,54 @@
 import React, { useContext } from 'react'
-//import { doctors } from '../assets/assets_frontend/assets'
 import{useNavigate} from "react-router-dom"
 import { AppContext } from '../context/AppContext';
+
 const TopDoctors = () => {
   const navigate=useNavigate();
   const{doctors} =useContext(AppContext)
+  
   return (
-    <div className='flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10'>
-      <h1 className='text-3xl font-medium'>Top Doctors to Book</h1>
-      <p className='sm:w-1/3 text-center text-sm'>
+    <div className='flex flex-col items-center gap-4 my-16 text-gray-900 dark:text-slate-100 md:mx-10'>
+      <h1 className='text-4xl font-bold tracking-tight'>Top Doctors to Book</h1>
+      <p className='sm:w-1/3 text-center text-sm text-gray-600 dark:text-slate-400 mt-2'>
         Simply browse through our extensive list of trusted doctors.
       </p>
-      <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
+      
+      <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 pt-10 px-4 sm:px-0'>
         {
           doctors.slice(0, 10).map((item, index) => (
-            <div key={index} className='border border-blue-200 rounded-xll overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-500' onClick={()=>navigate(`/appointment/${item._id}`)}>
-              <img src={item.image} alt="" className='bg-blue-50 w-full h-auto' />
-              <div className='p-4'>
-                <div className='flex items-center gap-2 text-sm text-green-500'>
-                  <p className='w-2 h-2 bg-green-500 rounded-full'></p>
-                  <p>Available</p>
+            <div 
+              key={index} 
+              className='group bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 rounded-3xl overflow-hidden cursor-pointer hover:-translate-y-2 hover:shadow-2xl shadow-sm transition-all duration-500' 
+              onClick={() => navigate(`/appointment/${item._id}`)}
+            >
+              <div className="overflow-hidden relative">
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  className='bg-primary/5 dark:bg-slate-700 w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110' 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              
+              <div className='p-5'>
+                <div className={`flex items-center gap-2 text-sm font-semibold mb-2 ${item.available ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400"}`}>
+                  <p className={`w-2.5 h-2.5 rounded-full ${item.available ? "bg-green-500" : "bg-red-500"} shadow-sm`}></p>
+                  <p>{item.available ? "Available" : "Not Available"}</p>
                 </div>
-                <p className='font-medium'>{item.name}</p>
-                <p className='text-sm text-gray-600'>{item.speciality}</p>
+                <p className='font-bold text-lg tracking-tight'>{item.name}</p>
+                <p className='text-[13px] font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mt-1'>{item.speciality}</p>
               </div>
             </div>
           ))
         }
       </div>
-      <button className='mt-6 px-6 py-2 bg-blue-50 rounded-xl text-blue-900' onClick={()=>{navigate("/doctors"),scrollTo(0,0)}}>More</button>
+      
+      <button 
+        className='mt-12 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 hover:border-primary/50 hover:text-primary dark:hover:text-primary-light hover:shadow-lg hover:-translate-y-0.5 px-10 py-3.5 rounded-full font-bold text-sm uppercase tracking-widest transition-all duration-300' 
+        onClick={() => { navigate("/doctors"); scrollTo(0,0) }}
+      >
+        More
+      </button>
     </div>
   )
 }

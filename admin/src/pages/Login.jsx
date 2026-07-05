@@ -61,51 +61,47 @@ const Login = () => {
   };
   return (
     <form
-      className="flex justify-center items-center min-h-screen bg-gray-100 "
+      className="flex justify-center items-center min-h-screen bg-slate-50 dark:bg-slate-950"
       onSubmit={onSubmitHandler}
     >
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <p className="text-xl font-semibold text-center mb-6">
-          <span className="text-blue-600">{state}</span> login
+      <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl w-full max-w-sm border border-slate-200 dark:border-slate-700">
+        <p className="text-xl font-semibold text-center mb-6 dark:text-white">
+          <span className="text-primary dark:text-primary-light">{state}</span> login
         </p>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Email</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Email</label>
           <input
             type="email"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:bg-slate-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-gray-700 mb-1">Password</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Password</label>
           <input
             type="password"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:bg-slate-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
+        <button className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition duration-200">
           Login
         </button>
 
-        <div className="mt-4 text-center text-sm text-gray-600">
+        <div className="mt-4 text-center text-sm text-gray-600 dark:text-slate-400">
           {state === "Admin" ? (
             <p>
               Doctor Login?{" "}
               <span
                 onClick={() => setState("Doctor")}
-                className="text-blue-500 hover:underline cursor-pointer"
+                className="text-primary dark:text-primary-light hover:underline cursor-pointer"
               >
                 Click here
               </span>
@@ -115,7 +111,7 @@ const Login = () => {
               Admin Login?{" "}
               <span
                 onClick={() => setState("Admin")}
-                className="text-blue-500 hover:underline cursor-pointer"
+                className="text-primary dark:text-primary-light hover:underline cursor-pointer"
               >
                 Click here
               </span>

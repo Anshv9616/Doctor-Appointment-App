@@ -139,28 +139,29 @@ const navigate=useNavigate()
    })
 
   return docInfo && (
-    <div>
+    <div className="max-w-7xl mx-auto px-4 py-8 relative">
       
-      <div className='flex flex-col sm:flex-row gap-4'>
-        <div>
-         <img src={docInfo.image} alt="" className='bg-blue-400 w-full sm:max-w-72 rounded-lg'/>
+      <div className='flex flex-col sm:flex-row gap-6 relative z-10'>
+        <div className="group overflow-hidden rounded-3xl shadow-xl border border-white/20 dark:border-slate-700 flex-shrink-0 relative">
+         <img src={docInfo.image} alt="" className='bg-primary/10 dark:bg-slate-700 w-full sm:max-w-72 h-full object-cover transition-transform duration-700 group-hover:scale-105'/>
+         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
         </div>
 
-        <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0 '>
-          <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>{docInfo.name} <img src={assets.verified_icon} alt="" className='w-5' /></p>
-          <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
+        <div className='flex-1 border border-white/40 dark:border-slate-700/50 shadow-2xl backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 rounded-3xl p-8 py-7 mx-2 sm:mx-0 mt-[-80px] sm:mt-0 relative transition-all duration-300 hover:shadow-primary/5 hover:-translate-y-1'>
+          <p className='flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-slate-100 tracking-tight'>{docInfo.name} <img src={assets.verified_icon} alt="" className='w-6 dark:invert' /></p>
+          <div className='flex items-center gap-2 text-sm mt-2 text-gray-600 dark:text-slate-400 font-medium'>
              <p>{docInfo.degree} - {docInfo.speciality}</p>
 
-             <button className='py-0.5 px-2 border text-xs rounded-full'>{docInfo.experience}</button>
+             <button className='py-0.5 px-3 border border-gray-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 text-xs rounded-full shadow-sm'>{docInfo.experience}</button>
           </div>
 
-           <div>
-              <p className='flex items-center gap-1 text-sm font-medium text-gray-900 mt-3'>About <img src={assets.info_icon} alt="" /></p>
-              <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
+           <div className="mt-6">
+              <p className='flex items-center gap-1 text-sm font-bold text-gray-900 dark:text-slate-200 tracking-wide uppercase'>About <img src={assets.info_icon} alt="" className="dark:invert w-4 opacity-70" /></p>
+              <p className='text-sm text-gray-500 dark:text-slate-400 max-w-[700px] mt-2 leading-relaxed'>{docInfo.about}</p>
            </div>
 
-             <p className='text-gray-500 font-medium mt-4'>
-               Appointment Fee: <span className='text-gray-600'>${docInfo.fees}</span>
+             <p className='text-gray-500 dark:text-slate-400 font-medium mt-6 p-4 bg-primary/5 dark:bg-slate-700/30 rounded-2xl border border-primary/10 dark:border-slate-600/50 inline-block'>
+               Appointment Fee: <span className='text-gray-800 dark:text-slate-200 text-lg ml-1 font-bold'>${docInfo.fees}</span>
              </p>
 
         </div>
@@ -168,29 +169,29 @@ const navigate=useNavigate()
 
       {/* booking slots */}
 
-      <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
+      <div className='sm:ml-72 sm:pl-6 mt-8 font-medium text-gray-700 dark:text-slate-300'>
 
-        <p>Booking sots</p>
-        <div className='flex gap-3 overflow-x-scroll w-full items-center mt-4'>
+        <p className="font-bold text-lg text-gray-800 dark:text-slate-200 mb-2">Booking Slots</p>
+        <div className='flex gap-3 overflow-x-scroll w-full items-center mt-4 pb-2 hide-scrollbar'>
           {docSlots.length && docSlots.map((item,index)=>(
-             <div key={index} onClick={()=>setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex===index ?"bg-blue-600 text-white ":"border  border-gray-400"}`}>
-                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-                <p>{item[0] && item[0].datetime.getDate()}</p>
+             <div key={index} onClick={()=>setSlotIndex(index)} className={`text-center py-5 px-2 min-w-20 rounded-3xl cursor-pointer transition-all duration-300 shadow-sm border ${slotIndex===index ?"bg-gradient-to-br from-primary to-indigo-500 text-white border-transparent scale-105 shadow-primary/20":"bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 hover:border-primary/50"}`}>
+                <p className="text-xs uppercase tracking-wider mb-1 opacity-80">{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
+                <p className="text-xl font-bold">{item[0] && item[0].datetime.getDate()}</p>
 
              </div>
           ))}
         </div>
 
-        <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
+        <div className='flex items-center gap-3 w-full overflow-x-scroll mt-6 pb-2 hide-scrollbar'>
           {docSlots.length && docSlots[slotIndex].map((item,index)=>(
-               <p onClick={()=>setSlotTime(item.time)} key={index} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time===slotTime ? "bg-blue-500 text-white":"text-gray-400 border border-gray-300"}`}>
+               <p onClick={()=>setSlotTime(item.time)} key={index} className={`text-sm font-semibold flex-shrink-0 px-6 py-2.5 rounded-full cursor-pointer transition-all duration-300 shadow-sm border ${item.time===slotTime ? "bg-primary text-white border-transparent shadow-primary/20":"bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-700 hover:border-primary/50 hover:text-primary dark:hover:text-primary-light"}`}>
                   {
                      item.time
                   }
                </p>
           ))}
         </div>
-        <button onClick={bookAppointment} className='bg-blue-500 text-white text-sm font-lg px-14 py-3 rounded-full my-6'>Book an Appointment</button>
+        <button onClick={bookAppointment} className='bg-gradient-to-br from-primary to-indigo-500 hover:from-primary-dark hover:to-indigo-600 text-white text-sm font-bold uppercase tracking-wider px-14 py-4 rounded-full my-8 shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-none cursor-pointer'>Book an Appointment</button>
 
       </div>
 
