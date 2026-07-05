@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav className="flex items-center justify-between px-6 py-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
       {/* Logo and Role */}
       <div className="flex items-center space-x-4">
-        <img src={assets.admin_logo} alt="Vitalis Admin Logo" className="h-8 w-auto" />
+        <img src={assets.admin_logo} alt="Prescripto Admin Logo" className="h-8 w-auto" />
         <p className="text-md font-semibold text-gray-700 dark:text-slate-300 border border-gray-300 dark:border-slate-700 rounded-full px-3 py-0.5">
           {admin_token ? 'Admin' : 'Doctor'}
         </p>

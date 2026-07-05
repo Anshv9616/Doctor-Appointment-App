@@ -11,7 +11,7 @@ const Footer = () => {
 
     {/* Branding Section */}
     <div className="flex flex-col justify-between h-full space-y-4">
-      <img src={assets.logo} alt="Vitalis Logo" className="w-36" />
+      <img src={assets.logo} alt="Prescripto Logo" className="w-36" />
       <p className="text-sm leading-relaxed">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
       </p>
